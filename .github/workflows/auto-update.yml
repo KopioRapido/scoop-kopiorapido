@@ -1,0 +1,69 @@
+name: Auto-Update Scoop Manifests
+
+on:
+  repository_dispatch:
+    types: [update-scoop]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to update to (e.g., 2026.02.07)'
+        required: true
+      win_x64_sha256:
+        description: 'SHA256 for Windows x64 CLI'
+        required: true
+      win_arm64_sha256:
+        description: 'SHA256 for Windows ARM64 CLI'
+        required: true
+      gui_win_x64_sha256:
+        description: 'SHA256 for Windows x64 GUI'
+        required: true
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Get version from dispatch or input
+        id: get_version
+        run: |
+          if [ "${{ github.event_name }}" = "repository_dispatch" ]; then
+            echo "version=${{ github.event.client_payload.version }}" >> $GITHUB_OUTPUT
+            echo "win_x64_sha256=${{ github.event.client_payload.win_x64_sha256 }}" >> $GITHUB_OUTPUT
+            echo "win_arm64_sha256=${{ github.event.client_payload.win_arm64_sha256 }}" >> $GITHUB_OUTPUT
+            echo "gui_win_x64_sha256=${{ github.event.client_payload.gui_win_x64_sha256 }}" >> $GITHUB_OUTPUT
+          else
+            echo "version=${{ github.event.inputs.version }}" >> $GITHUB_OUTPUT
+            echo "win_x64_sha256=${{ github.event.inputs.win_x64_sha256 }}" >> $GITHUB_OUTPUT
+            echo "win_arm64_sha256=${{ github.event.inputs.win_arm64_sha256 }}" >> $GITHUB_OUTPUT
+            echo "gui_win_x64_sha256=${{ github.event.inputs.gui_win_x64_sha256 }}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Update CLI manifest
+        run: |
+          VERSION="${{ steps.get_version.outputs.version }}"
+          WIN_X64_SHA="${{ steps.get_version.outputs.win_x64_sha256 }}"
+          WIN_ARM64_SHA="${{ steps.get_version.outputs.win_arm64_sha256 }}"
+
+          # Update kopiorapido.json
+          sed -i "s/\"version\": \".*\"/\"version\": \"$VERSION\"/" bucket/kopiorapido.json
+          sed -i "0,/\"hash\": \".*\"/s//\"hash\": \"$WIN_X64_SHA\"/" bucket/kopiorapido.json
+          sed -i "0,/\"hash\": \".*\"/s//\"hash\": \"$WIN_ARM64_SHA\"/" bucket/kopiorapido.json
+
+      - name: Update GUI manifest
+        run: |
+          VERSION="${{ steps.get_version.outputs.version }}"
+          GUI_SHA="${{ steps.get_version.outputs.gui_win_x64_sha256 }}"
+
+          # Update kopiorapido-gui.json
+          sed -i "s/\"version\": \".*\"/\"version\": \"$VERSION\"/" bucket/kopiorapido-gui.json
+          sed -i "s/\"hash\": \".*\"/\"hash\": \"$GUI_SHA\"/" bucket/kopiorapido-gui.json
+
+      - name: Commit and push
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add bucket/*.json
+          git commit -m "chore: update to version ${{ steps.get_version.outputs.version }}" || exit 0
+          git push

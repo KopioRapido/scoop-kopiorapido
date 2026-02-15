@@ -1,0 +1,35 @@
+{
+    "version": "2026.02.07",
+    "description": "High-performance file copying application with modern GUI",
+    "homepage": "https://kopiorapido.com",
+    "license": "MIT",
+    "architecture": {
+        "64bit": {
+            "url": "https://releases.kopiorapido.com/2026.02.07/gui/kopiorapido-gui-windows-x64-2026.02.07.zip",
+            "hash": "REPLACE_WITH_ACTUAL_SHA256"
+        }
+    },
+    "shortcuts": [
+        ["KopioRapido.exe", "KopioRapido"]
+    ],
+    "checkver": {
+        "github": "https://github.com/KredoKodo/KopioRapido"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://releases.kopiorapido.com/$version/gui/kopiorapido-gui-windows-x64-$version.zip"
+            }
+        }
+    },
+    "notes": [
+        "KopioRapido GUI has been installed!",
+        "",
+        "Launch from Start Menu or run: KopioRapido.exe",
+        "",
+        "Features:",
+        "  - Drag and drop files/folders",
+        "  - Copy, Move, Sync, Mirror operations",
+        "  - Real-time progress tracking"
+    ]
+}
