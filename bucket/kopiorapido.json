@@ -1,5 +1,5 @@
 {
-    "version": "2026.07.04",
+    "version": "2026.07.05",
     "description": "High-performance file copying CLI with delta sync and intelligent transfer",
     "homepage": "https://kopiorapido.com",
     "license": "Shareware",
@@ -14,8 +14,11 @@
         }
     },
     "bin": "kopiorapido.exe",
-    "aliases": [
-        "kp"
+    "shortcuts": [
+        [
+            "kopiorapido.exe",
+            "KopioRapido"
+        ]
     ],
     "checkver": {
         "url": "https://releases.kopiorapido.com/"
@@ -34,10 +37,10 @@
         "KopioRapido CLI has been installed!",
         "",
         "Quick start:",
-        "  kp copy /source /destination",
-        "  kp --help",
+        "  kopiorapido copy /source /destination",
+        "  kopiorapido --help",
         "",
         "For shell completion:",
-        "  kp completion powershell >> $PROFILE"
+        "  kopiorapido completion powershell >> $PROFILE"
     ]
 }
