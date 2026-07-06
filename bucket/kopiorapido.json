@@ -14,6 +14,9 @@
         }
     },
     "bin": "kopiorapido.exe",
+    "aliases": [
+        "kp"
+    ],
     "checkver": {
         "url": "https://releases.kopiorapido.com/"
     },
