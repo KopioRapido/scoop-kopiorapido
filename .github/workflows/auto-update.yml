@@ -15,8 +15,8 @@ on:
         description: 'SHA256 for Windows ARM64 CLI'
         required: true
       gui_win_x64_sha256:
-        description: 'SHA256 for Windows x64 GUI'
-        required: true
+        description: 'SHA256 for Windows x64 GUI (no longer released — optional)'
+        required: false
 
 jobs:
   update:
@@ -47,14 +47,19 @@ jobs:
 
       - name: Update CLI manifest
         run: |
-          VERSION="${{ steps.get_version.outputs.version }}"
-          WIN_X64_SHA="${{ steps.get_version.outputs.win_x64_sha256 }}"
-          WIN_ARM64_SHA="${{ steps.get_version.outputs.win_arm64_sha256 }}"
-
-          # Update kopiorapido.json
-          sed -i "s/\"version\": \".*\"/\"version\": \"$VERSION\"/" bucket/kopiorapido.json
-          sed -i "0,/\"hash\": \".*\"/s//\"hash\": \"$WIN_X64_SHA\"/" bucket/kopiorapido.json
-          sed -i "0,/\"hash\": \".*\"/s//\"hash\": \"$WIN_ARM64_SHA\"/" bucket/kopiorapido.json
+          python3 - <<'PY'
+          import json, pathlib
+          version = "${{ steps.get_version.outputs.version }}"
+          x64_sha = "${{ steps.get_version.outputs.win_x64_sha256 }}"
+          arm64_sha = "${{ steps.get_version.outputs.win_arm64_sha256 }}"
+          path = pathlib.Path('bucket/kopiorapido.json')
+          manifest = json.loads(path.read_text())
+          manifest['version'] = version
+          for arch, tag, sha in (('64bit', 'x64', x64_sha), ('arm64', 'arm64', arm64_sha)):
+              manifest['architecture'][arch]['url'] = f"https://releases.kopiorapido.com/{version}/cli/kopiorapido-cli-win-{tag}-{version}.zip"
+              manifest['architecture'][arch]['hash'] = sha
+          path.write_text(json.dumps(manifest, indent=4) + '\n')
+          PY
 
       - name: Update GUI manifest
         if: hashFiles('bucket/kopiorapido-gui.json') != ''
