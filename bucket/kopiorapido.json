@@ -5,12 +5,12 @@
     "license": "Shareware",
     "architecture": {
         "64bit": {
-            "url": "https://releases.kopiorapido.com/2026.07.06/cli/kopiorapido-cli-win-x64-2026.07.06.zip",
-            "hash": "535a900fa5bedf697fc6976f2f5922a922db590f0dac402dcd0abdc1b4ded1f7"
+            "url": "https://releases.kopiorapido.com/2026.08.22/cli/kopiorapido-cli-win-x64-2026.08.22.zip",
+            "hash": "5be626b626c7dfeac9c2c2e7538d8fa75def9d29d2a097d3a518657bd692e9a1"
         },
         "arm64": {
-            "url": "https://releases.kopiorapido.com/2026.07.06/cli/kopiorapido-cli-win-arm64-2026.07.06.zip",
-            "hash": "99164137c94a1825a1869faceceb0f823574888d3b8431fe6f17c7f933d99a3a"
+            "url": "https://releases.kopiorapido.com/2026.08.22/cli/kopiorapido-cli-win-arm64-2026.08.22.zip",
+            "hash": "535a900fa5bedf697fc6976f2f5922a922db590f0dac402dcd0abdc1b4ded1f7"
         }
     },
     "bin": "kopiorapido.exe",
