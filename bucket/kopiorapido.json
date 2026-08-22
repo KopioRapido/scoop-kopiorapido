@@ -6,11 +6,11 @@
     "architecture": {
         "64bit": {
             "url": "https://releases.kopiorapido.com/2026.08.22/cli/kopiorapido-cli-win-x64-2026.08.22.zip",
-            "hash": "8d871a86b69a78dc7efa5b86648e8018af65e7076d377a931aced66f4b598c1a"
+            "hash": "d59a74a8bd797e09af06dff51b5a38ecc980c68414bbcd0ca603e6b6939f79da"
         },
         "arm64": {
             "url": "https://releases.kopiorapido.com/2026.08.22/cli/kopiorapido-cli-win-arm64-2026.08.22.zip",
-            "hash": "aa20998558e57a7ef9451d0b71830d703f09b5fa93280e785e0452e1b849ed52"
+            "hash": "8d6b9c1ab261814e9f99c9465189ba8d54bc695825fb37736441152e4bb8be6a"
         }
     },
     "bin": "kopiorapido.exe",
