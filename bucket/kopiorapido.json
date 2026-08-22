@@ -29,10 +29,10 @@
     "autoupdate": {
         "architecture": {
             "64bit": {
-                "url": "https://releases.kopiorapido.com/%version%/cli/kopiorapido-cli-win-x64-%version%.zip"
+                "url": "https://releases.kopiorapido.com/%version%/cli/kopiorapido-cli-win-x64-%version%.zip?v=2"
             },
             "arm64": {
-                "url": "https://releases.kopiorapido.com/%version%/cli/kopiorapido-cli-win-arm64-%version%.zip"
+                "url": "https://releases.kopiorapido.com/%version%/cli/kopiorapido-cli-win-arm64-%version%.zip?v=2"
             }
         }
     },
