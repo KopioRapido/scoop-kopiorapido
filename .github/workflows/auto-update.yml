@@ -57,11 +57,12 @@ jobs:
           sed -i "0,/\"hash\": \".*\"/s//\"hash\": \"$WIN_ARM64_SHA\"/" bucket/kopiorapido.json
 
       - name: Update GUI manifest
+        if: hashFiles('bucket/kopiorapido-gui.json') != ''
         run: |
           VERSION="${{ steps.get_version.outputs.version }}"
           GUI_SHA="${{ steps.get_version.outputs.gui_win_x64_sha256 }}"
 
-          # Update kopiorapido-gui.json
+          # Update kopiorapido-gui.json (skipped when no GUI manifest exists)
           sed -i "s/\"version\": \".*\"/\"version\": \"$VERSION\"/" bucket/kopiorapido-gui.json
           sed -i "s/\"hash\": \".*\"/\"hash\": \"$GUI_SHA\"/" bucket/kopiorapido-gui.json
 
